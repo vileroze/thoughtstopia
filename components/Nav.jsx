@@ -12,11 +12,12 @@ const Nav = () => {
 
   useEffect(() => {
     const setProviders = async () => {
-      setProviders(await getProviders());
+      const response = await getProviders();
+      setProviders(response);
     };
 
     setProviders();
-  });
+  }, []);
 
   return (
     <nav className="flex-between w-full mb-16 pt-3">
@@ -44,6 +45,7 @@ const Nav = () => {
 
             <Link href={"/profile"}>
               <Image
+              alt="profile logo"
                 src={"/assets/images/logo.svg"}
                 width={37}
                 height={37}
