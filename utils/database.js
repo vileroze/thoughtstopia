@@ -11,10 +11,10 @@ export const connectToDB = async () => {
     }
 
     try {
-        await mongoose.connect(proces.env.MONGODB_URI, {
-            dbName: 'share_propmpt',
+        await mongoose.connect(process.env.MONGODB_URI, {
+            dbName: 'share_thoughts',
             useNewUrlParser: true,
-            useNewTopology:true
+            useUnifiedTopology:true
         });
 
         isConnected = true;
