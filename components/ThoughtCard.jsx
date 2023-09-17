@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PromptCard = () => {
+const ThoughtCard = () => {
   return (
     <div>PromptCard</div>
   )
 }
 
-export default PromptCard
+export default ThoughtCard
