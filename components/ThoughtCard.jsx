@@ -1,8 +1,8 @@
-import React from 'react'
+
 
 const ThoughtCard = () => {
   return (
-    <div>PromptCard</div>
+    <div className='prompt_card'>PromptCard</div>
   )
 }
 
