@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import ThoughtCard from "./ThoughtCard";
 
-const ThoughtCardList = ({ data, handleTagClick }) => {
+const ThoughtCardList = ({ posts, handleTagClick }) => {
   return (
     <div className="mt-16 prompt_layout">
-      {data.map((post) => (
+      {posts.map((post) => (
         <ThoughtCard
           key={post._id}
           post={post}
@@ -50,7 +50,7 @@ const Feed = () => {
         />
       </form>
 
-      <ThoughtCardList data={posts} handleTagClick={() => {}} />
+      <ThoughtCardList posts={posts} handleTagClick={() => {}} />
     </section>
   );
 };

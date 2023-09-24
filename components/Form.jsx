@@ -20,7 +20,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           </span>
 
           <textarea
-            value={post.prompt}
+            value={post.thought}
             onChange={(e) => setPost({ ...post, thought: e.target.value })}
             placeholder="Write your thoughts here"
             required
