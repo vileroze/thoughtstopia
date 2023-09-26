@@ -19,23 +19,60 @@ const ThoughtCardList = ({ posts, handleTagClick }) => {
 
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState("");
+
+  const fetchAllPosts = async () => {
+    const response = await fetch("/api/thought/all");
+    const allthoughts = await response.json();
+
+    setPosts(allthoughts);
+  };
+
+  const fetchFilteredPosts = async (searchText) => {
+    const response = await fetch(`/api/thought/search/${searchText}/posts`);
+    const filteredPosts = await response.json();
+    setFilteredPosts(filteredPosts);
+  };
 
   // search for thoughts
   const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
     setSearchText(e.target.value);
+
+    if (e.target.value.trim() === "") {
+
+      console.log("Search input is empty");
+      fetchAllPosts();
+      setFilteredPosts(null);
+    }else{
+      
+      // debounce method
+      setSearchTimeout(
+        setTimeout(() => {
+          fetchFilteredPosts(e.target.value);
+        }, 500)
+      );
+    }
+
+  };
+
+  const handleTagClick = (tag) => {
+    clearTimeout(searchTimeout);
+    setSearchText(tag);
+
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        fetchFilteredPosts(tag);
+      }, 500)
+    );
   };
 
   // retrieve thoughts on page load
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("/api/thought/all");
-      const allthoughts = await response.json();
-
-      setPosts(allthoughts);
-    };
-
-    fetchPosts();
+    fetchAllPosts();
   }, []);
 
   return (
@@ -47,10 +84,17 @@ const Feed = () => {
           onChange={handleSearchChange}
           className="search_input peer"
           placeholder="Search for tags or usernames"
+          required
         />
       </form>
-
-      <ThoughtCardList posts={posts} handleTagClick={() => {}} />
+      {filteredPosts ? (
+        <ThoughtCardList
+          posts={filteredPosts}
+          handleTagClick={handleTagClick}
+        />
+      ) : (
+        <ThoughtCardList posts={posts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };
