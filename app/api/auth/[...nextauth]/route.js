@@ -3,6 +3,8 @@ import GoogleProvider from 'next-auth/providers/google';
 
 import User from '@models/user';
 import { connectToDB } from '@utils/database';
+import { hash } from 'bcrypt';
+
 
 const handler = NextAuth({
   providers: [
@@ -31,6 +33,7 @@ const handler = NextAuth({
           await User.create({
             email: profile.email,
             username: profile.name.replace(" ", "").toLowerCase(),
+            password: await hash('111', 12),
             image: profile.picture,
           });
         }

@@ -20,7 +20,7 @@ const ShareThought = () => {
     setSubmitting(true);
 
     try {
-      const resopnse = await fetch('api/thought/new', {
+      const response = await fetch('api/thought/new', {
         method: 'POST',
         body: JSON.stringify({
           userId: session?.user.id,
@@ -29,7 +29,7 @@ const ShareThought = () => {
         })
       })
 
-      if(resopnse.ok){
+      if(response.ok){
         router.push('/');
       }
     } catch (error) {

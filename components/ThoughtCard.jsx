@@ -18,10 +18,14 @@ const ThoughtCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     }, 3000);
   };
 
+  const handleViewProfile = () => {
+    router.push("/profile?uid="+post.creator._id);
+  }
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer" onClick={handleViewProfile}>
           <Image
             src={post.creator.image}
             alt="user image"
@@ -58,7 +62,7 @@ const ThoughtCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
       {/* tags */}
       <p
-        className="font-inter text-sm blue_gradient cursor-pointer"
+        className={"font-inter text-sm blue_gradient" + (handleTagClick ? 'cursor-pointer' : '')}
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         {'#'+post.tag}

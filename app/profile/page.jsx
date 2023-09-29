@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Profile from "@components/Profile";
 
@@ -9,18 +9,20 @@ const MyProfile = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("uid");
 
   // retrieve thoughts of logged in user
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${session?.user.id}/posts`);
+      const response = await fetch(`/api/users/${userId}/posts`);
       const userThoughts = await response.json();
 
       setPosts(userThoughts);
     };
 
-    if (session?.user.id) fetchPosts();
-  }, [session?.user.id]);
+    if (userId) fetchPosts();
+  }, [userId]);
 
   const handleEdit = (post) => {
     router.push(`/update-thought?id=${post._id}`);

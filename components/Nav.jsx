@@ -4,13 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Nav = () => {
   // const isUserLoggedIn = true;
-  const {data:session} = useSession();
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -41,13 +43,17 @@ const Nav = () => {
               Share Thought
             </Link>
 
-            <button type="button" onClick={signOut} className="outline_btn">
+            <button
+              type="button"
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="outline_btn"
+            >
               Signout
             </button>
 
-            <Link href={"/profile"}>
+            <Link href={"/profile?uid=" + session?.user.id}>
               <Image
-              alt="profile logo"
+                alt="profile logo"
                 src={session?.user.image}
                 width={37}
                 height={37}
@@ -57,7 +63,7 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            {providers &&
+            {/* {providers &&
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -65,9 +71,16 @@ const Nav = () => {
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
                 >
-                  Signin
+                  Google
                 </button>
-              ))}
+              ))} */}
+            <button type="button" className="black_btn ml-3" key="anon" onClick={()=>{router.push('/anon-signin')}}>
+              Sign in
+            </button>
+
+            <button type="button" className="black_btn ml-3" key="signup" onClick={()=>{router.push('/anon-signup')}}>
+              Sign up
+            </button>
           </>
         )}
       </div>
@@ -89,7 +102,7 @@ const Nav = () => {
               <div className="dropdown">
                 {/* profile link */}
                 <Link
-                  href={"/profile"}
+                  href={"/profile?uid=" + session?.user.id}
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
@@ -100,13 +113,18 @@ const Nav = () => {
                 <Link
                   href={"/share-thought"}
                   className="dropdown_link"
+                  f
                   onClick={() => setToggleDropdown(false)}
                 >
                   Share a Thought
                 </Link>
 
                 {/* signout button */}
-                <button type="button" onClick={signOut} className="outline_btn">
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="outline_btn"
+                >
                   Signout
                 </button>
               </div>
@@ -122,9 +140,13 @@ const Nav = () => {
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
                 >
-                  Signin
+                  Google
                 </button>
               ))}
+
+            <button type="button" className="black_btn" key="anon" onClick={()=>{router.push('/anon-signin')}}>
+              Anonymous
+            </button>
           </>
         )}
       </div>
