@@ -63,7 +63,7 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            {/* {providers &&
+            {providers &&
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -71,9 +71,9 @@ const Nav = () => {
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
                 >
-                  Google
+                  {provider.name}
                 </button>
-              ))} */}
+              ))}
             <button type="button" className="black_btn ml-3" key="anon" onClick={()=>{router.push('/anon-signin')}}>
               Sign in
             </button>

@@ -3,8 +3,8 @@ import { hash } from "bcrypt";
 
 const { connectToDB } = require("@utils/database");
 
-export const POST  = async (req) => {
-    const {email, username, password} = await req.json();
+export const POST = async (req) => {
+    const { email, username, password } = await req.json();
 
     try {
         await connectToDB();
@@ -14,17 +14,20 @@ export const POST  = async (req) => {
 
         // if not, create a new document and save user in MongoDB
         if (!userExists) {
-        //   await User.create({
-        //     email: email,
-        //     username: username.toLowerCase(),
-        //     password: await hash(password, 12),
-        //   });
-        }else{
-            return new Response('Username already taken', {status: 201})
+            const newUser =  new User({
+                email: email,
+                username: username,
+                password: await hash(password, 12),
+                image: 'https://i.cbc.ca/1.5359228.1577206958!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_940/smudge-the-viral-cat.jpg'
+            });
+
+            await newUser.save();
+
+            return new Response('User created', { status: 200 })
         }
 
-        return new Response('User created', {status: 201})
+        return new Response('Username already taken', { status: 409 })
     } catch (error) {
-        return new Response('Failed to create new thought', {status: 500})
-    } 
+        return new Response(error, { status: 500 })
+    }
 }

@@ -4,7 +4,6 @@ import Form from "@components/Form";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-useSession
 
 const UpdateThought = () => {
   const router = useRouter();
