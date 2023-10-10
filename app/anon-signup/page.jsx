@@ -46,19 +46,16 @@ const AnonSingup = () => {
           email: "anonuser."+generateRandomString(4)+"@ponderland.guava",
           username: username,
           password: password,
+          // authType: 'signup'
         }),
       });
 
-      console.log("response:", response);
-
       if (response.ok) {
         signIn('credentials', { username: username, password: password, callbackUrl: `${window.location.origin}/` });
-        // router.push("/");
       }else if(response.status == 409){
         setErrMsg('Username already exists');
       }
     } catch (error) {
-      console.log("Error:", error);
     } finally {
       setSubmitting(false);
     }

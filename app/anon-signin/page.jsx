@@ -1,13 +1,43 @@
 "use client";
 
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+
 
 const AnonSingin = () => {
   const [submitting, setSubmitting] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleSignin = async (e) => {};
+  const [errMsg, setErrMsg] = useState("");
+
+  const router = useRouter();
+  const {data:session} = useSession();
+
+  const handleSignin = async (e) => {
+    e.preventDefault();
+
+    setErrMsg('');
+
+    setSubmitting(true);
+
+    try {
+
+      const result = await signIn('credentials', { username: username, password: password, redirect: false });
+
+      if (result.error) {
+        setErrMsg('Invalid credentials provided');
+      } else {
+        router.push('/');
+      }
+
+    } catch (error) {
+      setErrMsg(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -16,6 +46,12 @@ const AnonSingin = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
+  useEffect(() => {
+    if (session?.user) {
+      return router.push('/');
+    }
+  }, []);
 
   return (
     <div className="max-w-[280px] mx-auto">
@@ -30,25 +66,35 @@ const AnonSingin = () => {
             width={25}
             height={25}
           />
-          <span className="text-gray-700 font-medium">
+          <span
+            className="text-gray-700 font-medium"
+            onClick={() => signIn("google")}
+          >
             Continue with Google
           </span>
         </button>
         <span className="mb-2 text-gray-900">Or</span>
+        
+        <div className="signup-err text-[#c2421a]">{errMsg}</div>
+        
         <form onSubmit={handleSignin}>
-          <input
+        <input
             type="text"
             className="w-full px-6 py-3 mb-2 border border-slate-600 rounded-lg font-medium "
             name="username"
+            placeholder="username"
             onChange={handleUsernameChange}
-            value=""
+            value={username}
+            required
           />
           <input
             type="password"
             className="w-full px-6 py-3 mb-2 border border-slate-600 rounded-lg font-medium "
             name="password"
+            placeholder="password"
             onChange={handlePasswordChange}
-            value=""
+            value={password}
+            required
           />
           <button className="black_btn w-full" disabled={submitting}>
             {submitting ? `Logging in...` : "Login"}

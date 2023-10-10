@@ -86,7 +86,7 @@ const handler = NextAuth({
 
           // const pass = await hash(credentials.password,12);
           // check if user already exists
-          const userExists = await User.findOne({ username: credentials.username });
+          // const userExists = await User.findOne({ username: credentials.username });
           // const userExists = await User.findOne({
           //   $and: [
           //     { username: credentials.username },
@@ -102,7 +102,10 @@ const handler = NextAuth({
         return false;
       }
     },
-  }
+  },
+  pages: {
+    error: '/anon-signin',
+  },
 })
 
 export { handler as GET, handler as POST }
