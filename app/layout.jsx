@@ -8,6 +8,7 @@ export const metadata = {
   icons: {
     icon: '/assets/images/logo_10.png',
   },
+  googleSiteVerification: "uudaC6vPPLY39oWpOLoCd4T_wqOUHHgrmsrfbWJ1gN4",
 };
 
 const RootLayout = ({ children }) => {
