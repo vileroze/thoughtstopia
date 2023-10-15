@@ -51,7 +51,7 @@ const AnonSingin = () => {
     if (session?.user) {
       return router.push('/');
     }
-  }, []);
+  }, [session?.user]);
 
   return (
     <div className="max-w-[280px] mx-auto">

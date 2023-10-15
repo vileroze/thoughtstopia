@@ -3,8 +3,11 @@ import Provider from "@components/Provider";
 import "@styles/globals.css";
 
 export const metadata = {
-  title: "Ponderland",
+  title: "Thoughtstopia",
   description: "For the minds that never rest, share and discover thoughts",
+  icons: {
+    icon: '/assets/images/logo_10.png',
+  },
 };
 
 const RootLayout = ({ children }) => {

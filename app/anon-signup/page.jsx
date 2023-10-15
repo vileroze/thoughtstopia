@@ -30,7 +30,7 @@ const AnonSingup = () => {
     if (session?.user) {
       return router.push('/');
     }
-  }, []);
+  }, [session?.user]);
 
   const handleSignup = async (e) => {
     e.preventDefault();

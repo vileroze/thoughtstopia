@@ -28,7 +28,7 @@ const Nav = () => {
       <Link href={"/"} className="flex gap-2 flex-center">
         <Image
           src={"/assets/images/logo_10.png"}
-          alt="Ponderland Logo"
+          alt="Thoughtstopia Logo"
           width={50}
           height={50}
           className="object-contain"
