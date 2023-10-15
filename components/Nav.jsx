@@ -27,10 +27,10 @@ const Nav = () => {
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href={"/"} className="flex gap-2 flex-center">
         <Image
-          src={"/assets/images/logo.svg"}
-          alt="Thoughtstopia Logo"
-          width={30}
-          height={30}
+          src={"/assets/images/logo_10.png"}
+          alt="Ponderland Logo"
+          width={50}
+          height={50}
           className="object-contain"
         />
       </Link>
@@ -63,7 +63,7 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            {providers &&
+            {/* {providers &&
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -73,7 +73,7 @@ const Nav = () => {
                 >
                   {provider.name}
                 </button>
-              ))}
+              ))} */}
             <button type="button" className="black_btn ml-3" key="anon" onClick={()=>{router.push('/anon-signin')}}>
               Sign in
             </button>

@@ -17,9 +17,10 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
       <h1 className="head_text text-left">
         <span className="blue_gradient">{name} Profile</span>
       </h1>
-      <p className="desc text-left">{desc}</p>
-
-      <div className="qr-code">
+      {/* <p className="desc text-left">{desc}</p> */}
+      
+      <p className="desc text-left mt-20">Share profile:</p>
+      <div className="qr-code mt-2">
         {url && <QRCode value={url}/>}
       </div>
 

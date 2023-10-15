@@ -42,12 +42,10 @@ const Feed = () => {
     setSearchText(e.target.value);
 
     if (e.target.value.trim() === "") {
-
       console.log("Search input is empty");
       fetchAllPosts();
       setFilteredPosts(null);
-    }else{
-      
+    } else {
       // debounce method
       setSearchTimeout(
         setTimeout(() => {
@@ -55,7 +53,6 @@ const Feed = () => {
         }, 500)
       );
     }
-
   };
 
   const handleTagClick = (tag) => {
@@ -77,11 +74,12 @@ const Feed = () => {
 
   return (
     <section className="feed">
-      <form className="relative w-full flex-center">
+      <form className="relative w-full flex-center" onSubmit={e => { e.preventDefault(); }}>
         <input
           type="text"
           value={searchText}
           onChange={handleSearchChange}
+          
           className="search_input peer"
           placeholder="Search for tags or usernames"
           required

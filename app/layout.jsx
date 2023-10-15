@@ -3,7 +3,7 @@ import Provider from "@components/Provider";
 import "@styles/globals.css";
 
 export const metadata = {
-  title: "Thoughtstopia",
+  title: "Ponderland",
   description: "For the minds that never rest, share and discover thoughts",
 };
 
