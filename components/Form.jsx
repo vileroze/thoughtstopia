@@ -31,7 +31,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
             <span className="font-normal">
-              Tags (#showerthoughts, #idea, #affirmations, #quote)
+              Tags (#showerthoughts #idea #affirmations #quote)
             </span>
           </span>
           <input

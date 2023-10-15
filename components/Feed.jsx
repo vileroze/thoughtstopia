@@ -31,7 +31,8 @@ const Feed = () => {
   };
 
   const fetchFilteredPosts = async (searchText) => {
-    const response = await fetch(`/api/thought/search/${searchText}/posts`);
+    const encodedSearchText = encodeURIComponent(searchText);
+    const response = await fetch(`/api/thought/search/${encodedSearchText}/posts`);
     const filteredPosts = await response.json();
     setFilteredPosts(filteredPosts);
   };
