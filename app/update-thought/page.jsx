@@ -1,6 +1,7 @@
 "use client";
 
 import Form from "@components/Form";
+import { PageWrapper } from "@components/page-wrapper";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -54,6 +55,7 @@ const UpdateThought = () => {
   };
 
   return (
+    <PageWrapper>
     <Form
       type="Edit"
       post={post}
@@ -61,6 +63,7 @@ const UpdateThought = () => {
       submitting={submitting}
       handleSubmit={updateThought}
     />
+    </PageWrapper>
   );
 };
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { PageWrapper } from "@components/page-wrapper";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -54,6 +55,7 @@ const AnonSingin = () => {
   }, [session?.user]);
 
   return (
+    <PageWrapper>
     <div className="max-w-[280px] mx-auto">
       <div className="flex flex-col items-center mt-[10vh]">
         <h2 className="mb-5 text-gray-900 font-mono font-bold text-xl">
@@ -102,7 +104,7 @@ const AnonSingin = () => {
         </form>
         <p className="text-center mt-3 text-[14px]">
           Don&#x27;t have an account?
-          <a href="/signup" className="text-gray-600">
+          <a href="/anon-signup" className="text-gray-600">
             Create one
           </a>
         </p>
@@ -119,6 +121,7 @@ const AnonSingin = () => {
         </p>
       </div>
     </div>
+    </PageWrapper>
   );
 };
 

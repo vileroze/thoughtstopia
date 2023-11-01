@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Profile from "@components/Profile";
+import { PageWrapper } from "@components/page-wrapper";
 
 const MyProfile = () => {
   const [posts, setPosts] = useState([]);
@@ -46,13 +47,15 @@ const MyProfile = () => {
   };
 
   return (
-    <Profile
-      name="My"
-      desc="Welcome to your profile"
-      data={posts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-    />
+    <PageWrapper>
+      <Profile
+        name="My"
+        desc="Welcome to your profile"
+        data={posts}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+    </PageWrapper>
   );
 };
 
