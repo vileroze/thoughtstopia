@@ -30,6 +30,8 @@ const Feed = () => {
     setPosts(allthoughts);
   };
 
+
+
   const fetchFilteredPosts = async (searchText) => {
     const encodedSearchText = encodeURIComponent(searchText);
     const response = await fetch(`/api/thought/search/${encodedSearchText}/posts`);
@@ -71,7 +73,7 @@ const Feed = () => {
   // retrieve thoughts on page load
   useEffect(() => {
     fetchAllPosts();
-  }, []);
+  });
 
   return (
     <section className="feed">

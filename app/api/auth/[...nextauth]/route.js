@@ -4,7 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 import User from '@models/user';
 import { connectToDB } from '@utils/database';
-import { hash } from 'bcrypt';
 import bcrypt from 'bcrypt';
 
 
@@ -78,21 +77,10 @@ const handler = NextAuth({
             await User.create({
               email: profile.email,
               username: profile.name.replace(" ", "").toLowerCase(),
-              password: await hash('111', 12),
+              password: await bcrypt.hash('111', 12),
               image: profile.picture,
             });
           }
-        } else if (account.provider === 'credentials') {
-
-          // const pass = await hash(credentials.password,12);
-          // check if user already exists
-          // const userExists = await User.findOne({ username: credentials.username });
-          // const userExists = await User.findOne({
-          //   $and: [
-          //     { username: credentials.username },
-          //     { password: await hash(credentials.password,12) },
-          //   ]
-          // });
         }
 
         return true;
