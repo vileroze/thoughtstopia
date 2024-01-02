@@ -24,7 +24,9 @@ const Feed = () => {
   const [filteredPosts, setFilteredPosts] = useState("");
 
   const fetchAllPosts = async () => {
-    const response = await fetch("/api/thought/all");
+    const response = await fetch("/api/thought/all", {
+      cache: "no-store",
+    });
     const allthoughts = await response.json();
 
     setPosts(allthoughts);
