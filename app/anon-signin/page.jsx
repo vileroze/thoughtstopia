@@ -25,7 +25,7 @@ const AnonSingin = () => {
 
     try {
 
-      const result = await signIn('credentials', { username: username, password: password, redirect: false });
+      const result = await signIn('anon-username-login', { username: username, password: password, redirect: false });
 
       if (result.error) {
         setErrMsg('Invalid credentials provided');

@@ -14,6 +14,7 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
+      id: 'anon-username-login',
       name: 'credentials',
       credentials: {
         username: {
@@ -27,7 +28,9 @@ const handler = NextAuth({
           placeholder: 'Enter password',
         },
       },
-      async authorize(credentials) {
+
+      // async authorize(credentials) {
+      authorize: async (credentials) => {
         if (!credentials) return null;
 
         const user = await User.findOne({ username: credentials.username });
