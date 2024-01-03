@@ -3,7 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import User from '@models/user';
-import { connectToDB } from '@utils/database';
 import bcrypt from 'bcrypt';
 
 
@@ -32,7 +31,7 @@ const handler = NextAuth({
       // async authorize(credentials) {
       authorize: async (credentials) => {
         console.log("🚀 ~ file: route.js:56 ~ credentials: ~ authorize:=====================================");
-        
+
         if (!credentials) return null;
 
         const user = await User.findOne({ username: credentials.username });
@@ -50,10 +49,40 @@ const handler = NextAuth({
       },
     }),
   ],
-  
+
   callbacks: {
+    signIn: async ({ account, profile, user, credentials }) => {
+      console.log("🚀 ~ file: route.js:34 ~ callbacks: ~ signin:======================================");
+
+      if (account.provider == 'google') {
+        try {
+          // check if user already exists
+          const userExists = await User.findOne({ email: profile.email });
+
+          // if not, create a new document and save user in MongoDB
+          if (!userExists) {
+            await User.create({
+              email: profile.email,
+              username: profile.name.replace(" ", "").toLowerCase(),
+              password: await bcrypt.hash('111', 12),
+              image: profile.picture,
+            });
+          }
+
+          return true;
+
+        } catch (error) {
+          console.log("Error checking if user exists: ", error.message);
+          return false;
+        }
+      }
+
+      return true;
+
+    },
     session: async ({ session, user }) => {
       console.log("🚀 ~ file: route.js:56 ~ callbacks: ~ session:=====================================");
+
       // store the user id from MongoDB to session
       const sessionUser = await User.findOne({
         $or: [
@@ -66,11 +95,7 @@ const handler = NextAuth({
 
       return session;
     },
-    signIn: async ({ account, profile, user, credentials }) => {
-      console.log("🚀 ~ file: route.js:34 ~ callbacks: ~ signin:======================================");
-      return Promise.resolve(true);
-      
-    },
+    
   },
   session: {
     jwt: true,
@@ -79,7 +104,7 @@ const handler = NextAuth({
     secret: "secret",
     encryption: true
   },
-  debug: true,
+  // debug: true,
   pages: {
     error: '/anon-signin',
   },

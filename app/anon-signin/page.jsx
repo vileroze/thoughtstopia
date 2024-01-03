@@ -15,7 +15,7 @@ const AnonSingin = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const handleSignin = async (e) => {
+  const handleSignin = (e) => {
     e.preventDefault();
 
     setErrMsg("");
@@ -23,7 +23,7 @@ const AnonSingin = () => {
     setSubmitting(true);
 
     try {
-      const result = await signIn("anon-username-login", {
+      const result = signIn("anon-username-login", {
         username: username,
         password: password,
         redirect: false,
