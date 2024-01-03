@@ -23,16 +23,6 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState("");
 
-  const fetchAllPosts = async () => {
-    const response = await fetch("/api/thought/all", {
-      cache: "no-store",
-    });
-    const allthoughts = await response.json();
-
-    setPosts(allthoughts);
-  };
-
-
 
   const fetchFilteredPosts = async (searchText) => {
     const encodedSearchText = encodeURIComponent(searchText);
@@ -74,8 +64,17 @@ const Feed = () => {
 
   // retrieve thoughts on page load
   useEffect(() => {
+    const fetchAllPosts = async () => {
+      console.log('aaaaaaa');
+      const response = await fetch("/api/thought/all", {
+        cache: "no-store",
+      });
+      const allthoughts = await response.json();
+  
+      setPosts(allthoughts);
+    };
     fetchAllPosts();
-  });
+  },[]);
 
   return (
     <section className="feed">
