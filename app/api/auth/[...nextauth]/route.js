@@ -30,7 +30,7 @@ const handler = NextAuth({
 
       // async authorize(credentials) {
       authorize: async (credentials) => {
-        console.log("🚀 ~ file: route.js:56 ~ credentials: ~ authorize:=====================================");
+        console.log("🚀 ~ file: route.js:56 ~ credentials: ~ authorize:=====================================",credentials);
 
         if (!credentials) return null;
 
@@ -46,18 +46,22 @@ const handler = NextAuth({
         }
 
         return user;
+
       },
     }),
   ],
 
   callbacks: {
     signIn: async ({ account, profile, user, credentials }) => {
-      console.log("🚀 ~ file: route.js:34 ~ callbacks: ~ signin:======================================");
+      console.log("🚀 ~ file: route.js:34 ~ callbacks: ~ signin ~ account:======================================",account);
+      console.log("🚀 ~ file: route.js:34 ~ callbacks: ~ signin ~ profile:======================================",profile);
 
       if (account.provider == 'google') {
         try {
           // check if user already exists
           const userExists = await User.findOne({ email: profile.email });
+
+          console.log("🚀 ~ file: route.js:62 ~ signIn: ~ userExists:", userExists)
 
           // if not, create a new document and save user in MongoDB
           if (!userExists) {
@@ -81,8 +85,7 @@ const handler = NextAuth({
 
     },
     session: async ({ session, user }) => {
-      console.log("🚀 ~ file: route.js:56 ~ callbacks: ~ session:=====================================");
-
+      
       // store the user id from MongoDB to session
       const sessionUser = await User.findOne({
         $or: [
@@ -90,9 +93,10 @@ const handler = NextAuth({
           { username: session.user.username },
         ]
       });
-
+      
       session.user.id = sessionUser._id.toString();
-
+      
+      console.log("🚀 ~ file: route.js:56 ~ callbacks: ~ session:=====================================", session);
       return session;
     },
     
